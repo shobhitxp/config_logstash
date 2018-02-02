@@ -1,0 +1,14 @@
+---
+
+- include: config.yml
+  when: filebeat_create_config
+
+- name: Ensure logstash is re-started
+  service:
+    name: logstash
+    state: restarted
+
+- name: Ensure Filebeat is re-started
+  service:
+    name: filebeat
+    state: restarted

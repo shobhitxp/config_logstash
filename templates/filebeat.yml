@@ -1,0 +1,6 @@
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /opt/logstash_oldlogs/*.log
+output.logstash:
+  hosts: ["localhost:5044"]

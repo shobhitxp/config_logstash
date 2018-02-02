@@ -1,0 +1,39 @@
+---
+
+- name: Remove logstash default configuration.
+  file:
+    path: "/etc/logstash/conf.d/*"
+    state: absent
+
+- name: Create logstash old log directory.
+  file:
+    path: /opt/logstash_oldlogs
+    state: directory
+    mode: 0755
+
+
+- name: Copy old logs.
+  template:
+    src: log*.log
+    dest: "/opt/logstash_oldlogs/"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy Filebeat configuration.
+  template:
+    src: filebeat.yml
+    dest: "/etc/filebeat/filebeat.yml"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart filebeat
+
+- name: Copy Logstash configuration.
+  template:
+    src: pipeline.conf
+    dest: "/etc/logstash/conf.d/pipeline.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart logstash
