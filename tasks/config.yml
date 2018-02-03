@@ -13,12 +13,13 @@
 
 
 - name: Copy old logs.
-  template:
-    src: log*.log
-    dest: "/opt/logstash_oldlogs/"
-    owner: root
-    group: root
-    mode: 0644
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/fooapp/"
+    owner: "root"
+    mode: 0600
+  with_fileglob:
+    - "files/logs/*"
 
 - name: Copy Filebeat configuration.
   template:
