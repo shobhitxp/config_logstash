@@ -15,7 +15,7 @@
 - name: Copy old logs.
   copy:
     src: "{{ item }}"
-    dest: "/etc/fooapp/"
+    dest: "/opt/logstash_oldlogs/"
     owner: "root"
     mode: 0600
   with_fileglob:
